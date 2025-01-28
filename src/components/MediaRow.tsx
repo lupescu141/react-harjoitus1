@@ -1,20 +1,26 @@
 import {MediaItem} from '../types/DBTypes';
+import {Link} from 'react-router';
 
-// src/components/MediaRow.tsx
-const MediaRow = (props: {item: MediaItem}) => {
+type MediaItemProps = {
+  item: MediaItem;
+  setSelectedItem: (item: MediaItem | undefined) => void;
+};
+
+const MediaRow = (props: MediaItemProps) => {
   const {item} = props;
   return (
-    // TODO: move <tr> element  for each item property from Home.tsx here
-    <tr key={item.media_id}>
-      <td>
-        <img src={item.thumbnail} alt={item.title} />
-      </td>
-      <td>{item.title}</td>
-      <td>{item.description}</td>
-      <td>{new Date(item.created_at).toLocaleDateString()}</td>
-      <td>{item.filesize}</td>
-      <td>{item.media_type}</td>
-    </tr>
+    <Link to="/single" state={{item}} className="media-link">
+      <div className="media">
+        <img src={item.thumbnail || undefined} alt={item.title} />
+        <div className="media-info">
+          <div>{item.title}</div>
+          <div>{item.description}</div>
+          <div>{new Date(item.created_at).toLocaleString('fi-FI')}</div>
+          <div>{item.filesize}</div>
+          <div>{item.media_type}</div>
+        </div>
+      </div>
+    </Link>
   );
 };
 
